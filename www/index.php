@@ -1,39 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+<?php
 
-    <title>Blog Template for Bootstrap</title>
+  $title = "Chache Chache Blog";
 
-    <!-- Bootstrap core CSS -->
-    <link href="styles/bootstrap.min.css" rel="stylesheet">
+  # import functions lib..
+  include 'includes/functions.php';
 
-    <!-- Custom styles for this template -->
-    <link href="styles/blog.css" rel="stylesheet">
-  </head>
+  # include dashboard header
+  include 'includes/index_header.php';
 
-  <body>
+  # include db connection
+  include 'includes/connection.php';
 
-    <div class="blog-masthead">
-      <div class="container">
-        <nav class="nav blog-nav">
-          <a class="nav-link active" href="#">Home</a>
-          <a class="nav-link" href="#">New features</a>
-          <a class="nav-link" href="#">Press</a>
-          <a class="nav-link" href="#">New hires</a>
-          <a class="nav-link" href="#">About</a>
-        </nav>
-      </div>
-    </div>
+?>
+
+
 
     <div class="blog-header">
       <div class="container">
-        <h1 class="blog-title">The Bootstrap Blog</h1>
-        <p class="lead blog-description">An example blog template built with Bootstrap.</p>
+        <h1 class="blog-title">CHACHE CHACHE BLOG</h1>
+        <p class="lead blog-description">An blog full of surprises.</p>
       </div>
     </div>
 
@@ -43,8 +28,14 @@
 
         <div class="col-sm-8 blog-main">
 
-          <div class="blog-post">
-            <h2 class="blog-post-title">Sample blog post</h2>
+        
+
+
+        <div class="blog-post">
+
+        <?php $post = Utils::displayPost($conn); echo $post; ?>
+
+ <!--           <h2 class="blog-post-title">Sample blog post</h2>
             <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
 
             <p>This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
@@ -74,7 +65,7 @@
               <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
             </ol>
             <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
-          </div><!-- /.blog-post -->
+          </div>
 
           <div class="blog-post">
             <h2 class="blog-post-title">Another blog post</h2>
@@ -86,7 +77,7 @@
             </blockquote>
             <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
             <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-          </div><!-- /.blog-post -->
+          </div>
 
           <div class="blog-post">
             <h2 class="blog-post-title">New feature</h2>
@@ -99,8 +90,9 @@
               <li>Nulla vitae elit libero, a pharetra augue.</li>
             </ul>
             <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-            <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-          </div><!-- /.blog-post -->
+            <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>   -->
+
+          </div>     
 
           <nav class="blog-pagination">
             <a class="btn btn-outline-primary" href="#">Older</a>
@@ -146,7 +138,7 @@
     </div><!-- /.container -->
 
     <footer class="blog-footer">
-      <p>Blog template built for <a href="https://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      <p>Built for <a href="https://getbootstrap.com">Chache Chache Blog</a> by <a href="#">DO</a></p>
       <p>
         <a href="#">Back to top</a>
       </p>
