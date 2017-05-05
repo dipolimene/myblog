@@ -114,9 +114,11 @@
 
 			while ($row = $stmt->fetch(PDO::FETCH_BOTH)) {
 
+
+
 				$result .= '<tr><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[2].'</td><td>'.$row[4].'</td>
 				<td><a href="edit_post.php?post_id='.$row[0].'">edit</a></td>
-				<td><a href="delete.php?post_id='.$row[0].'">delete</a></td></tr>';
+		<td><a href="delete.php?post_id='.$row[0].'">delete</a></td>'.'<td><a href="archive.php?post_id='.$row[0].'">archive</a><td></tr>';
 			}
 
 			return $result;
@@ -144,6 +146,16 @@
 			return $row;
 		}
 
+		public static function getAdminByID($dbconn, $adminid) {
+			$stmt = $dbconn->prepare("SELECT * FROM admin WHERE admin_id=:aid");
+			$stmt->bindParam(":aid", $adminid);
+			$stmt->execute();
+
+			$row = $stmt->fetch(PDO::FETCH_BOTH);
+
+			return $row;
+		}
+
 		public static function deletePost($dbconn, $pid){
 
 		$stmt = $dbconn->prepare("DELETE FROM post WHERE post_id =:pid");
@@ -159,16 +171,70 @@
 		public static function displayPost($dbconn) {
 			$result = "";
 
-			$stmt = $dbconn->prepare("SELECT * FROM post");
+			$stmt = $dbconn->prepare("SELECT title, content, admin_id, DATE_FORMAT(post_date,'%M %e, %Y') AS d FROM post");
 
 			$stmt->execute();
 
 			while ($row = $stmt->fetch(PDO::FETCH_BOTH)) {
 
-				$result .= '<h2 class="blog-post-title">'.$row[1].'</h2><p class="blog-post-meta">'.$row[4].'<a href="#">'.$row[3].'</a></p><p>'.$row[2].'</p>';
+				$item = Utils::getAdminByID($dbconn, $row['admin_id']);
+
+				$result .= '<h2 class="blog-post-title">'.$row['title'].'</h2><p class="blog-post-meta">'.$row['d'].' '.'<a href="#">'.$item['firstname'].' '.$item['lastname'].'</a></p><p>'.$row['content'].'</p>';
 			}
 
 			return $result;
+		}
+
+		public static function archivePost($dbconn, $post) {
+
+			$stmt = $dbconn->prepare("INSERT INTO archive(post_id, archive_date) VALUES(:p, :d)");
+
+			$data = [
+					":p" => $post['post_id'], 
+					":d" => $post['post_date']
+					];
+
+			$stmt->execute($data);
+
+		}
+
+		public static function fetchArchive($dbconn) {
+			$result = "";
+
+			$stmt = $dbconn->prepare("SELECT DISTINCT DATE_FORMAT(archive_date,'%M %Y') AS d, archive_date FROM archive");
+
+			$stmt->execute();
+
+			while ($row = $stmt->fetch(PDO::FETCH_BOTH)) {
+
+				$result .= '<li><a href="archive.php?date='.$row['d'].'">'.$row['d'].'</a></li>';
+
+			}
+
+			return $result;
+		}
+
+		public static function displayArchiveInfo($dbconn){
+
+			$result = "";
+
+			$stmt = $dbconn->prepare("SELECT * FROM archive where DATE_FORMAT(archive_date,'%M %Y') AS d");
+
+			$stmt->execute();
+
+			while($row = $stmt->fetcj(PDO::FETCH_BOTH)){
+
+				$item = Utils::getPostByID($dbconn, $row['post_id']);
+
+				$id = Utils::getPostByID($dbconn, $row['admin_id']);
+
+				$result .= '<h2 class="blog-post-title">'.$item['title'].'</h2><p class="blog-post-meta">'.$row['d'].' '.'<a href="#">'.$id['firstname'].' '.$id['lastname'].'</a></p><p>'.$item['content'].'</p>';
+
+
+			}
+
+			return $result;
+
 		}
 
 /*		public static function showAdmins($dbconn) {

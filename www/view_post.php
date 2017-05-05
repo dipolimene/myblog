@@ -29,6 +29,7 @@
 						<th>Date Posted</th>
 						<th>Edit</th>
 						<th>Delete</th>
+						<th>Archive</th>
 					</tr>
 				</thead>
 				<tbody>
